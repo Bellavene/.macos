@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/sh
 
 VPN=`networksetup -showpppoestatus "VPN"`
 if [[ $VPN =~ "disconnected" ]]
