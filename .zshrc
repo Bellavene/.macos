@@ -29,11 +29,11 @@ alias -g sd=/Volumes/Untitled
 alias adobe="pkill -9 -fi \'core sync\'; pkill -9 -fi \'creative cloud\'; pkill -9 -fi \'adobe desktop service\'; pkill -9 -fi \'adobeipcbroker\'; pkill -9 -fi \'logtransport\'"
 
 # File exstensions handling
-alias -s lua="$EDIT"
-alias -s txt="$EDIT"
-alias -s conf="$EDIT"
-alias -s cfg="$EDIT"
-alias -s ini="$EDIT"
+alias -s lua="editor"
+alias -s txt="editor"
+alias -s conf="editor"
+alias -s cfg="editor"
+alias -s ini="editor"
 alias -s jpg="ascii-image-converter -C"
 alias -s jpeg="ascii-image-converter -C"
 alias -s png="ascii-image-converter -C"
