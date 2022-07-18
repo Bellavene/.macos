@@ -205,13 +205,10 @@ pb-yank () {
   CUTBUFFER=$(pbpaste)
   zle yank
 }
-
 zle -N pb-copy-region
 bindkey -e '\ec' pb-copy-region
-
 zle -N pb-cut-region
 bindkey -e '\ex' pb-cut-region
-
 zle -N pb-yank
 bindkey '\ev' pb-yank
 
