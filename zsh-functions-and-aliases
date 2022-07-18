@@ -1,6 +1,19 @@
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+setopt hist_expire_dups_first # expire duplicate entries first when trimming history
+setopt hist_find_no_dups      # do not display a line previously found
+setopt hist_ignore_all_dups   # ignore all double commands in history
+setopt hist_ignore_dups       # don't record an entry that was just recorded again
+setopt hist_ignore_space      # don't add commands to history that start with space
+setopt hist_reduce_blanks     # reduce blanks in history
+setopt hist_save_no_dups      # don't write duplicate entries in the history file
+setopt inc_append_history     # write to the history file immediately, not when the shell exits
+setopt share_history          # share history between all sessions
+
+# Minimal command prompt / only path
+export PS1=%B%F{green}%~/%f%b
+
 # Those list pressed Keycodes
 alias keycodes="xxd -psd"
 alias keycodes2="sed -n l"
@@ -111,6 +124,48 @@ zle -N insert-sudo _insert_sudo
 bindkey "\eS" insert-sudo
 
 
+# Alt+E Edit command line
+zle -N 'edit-command-line'
+bindkey '\ee' edit-command-line
+
+
+# Prompt Selection / Shift + direction
+shift-arrow() {
+  ((REGION_ACTIVE)) || zle set-mark-command
+  zle $1
+}
+shift-left()  shift-arrow backward-char
+shift-right() shift-arrow forward-char
+shift-up()    shift-arrow beginning-of-line
+shift-down()  shift-arrow end-of-line
+shift-alt-left()  shift-arrow backward-word
+shift-alt-right() shift-arrow forward-word
+zle -N shift-left
+zle -N shift-right
+zle -N shift-up
+zle -N shift-down
+zle -N shift-alt-left
+zle -N shift-alt-right
+bindkey "^[[1;2A" shift-up
+bindkey "^[[1;2B" shift-down
+bindkey "^[[1;2D" shift-left
+bindkey "^[[1;2C" shift-right
+bindkey "^[[1;10D" shift-alt-left
+bindkey "^[[1;10C" shift-alt-right
+
+
+# Backspace deletes also selected text
+delete-selection() {
+  if ((REGION_ACTIVE)) then
+     zle kill-region
+  else
+     zle backward-delete-char
+  fi
+}
+zle -N delete-selection
+bindkey -e "^?" delete-selection
+
+
 # Insert last executed command output
 zmodload -i zsh/parameter
 insert-last-command-output() {
@@ -122,19 +177,30 @@ bindkey -r '\Cv'
 bindkey '\Cv' insert-last-command-output
 
 
+# Option + A selects all typed text
+select-all() {
+    local buflen=$(echo -n "$BUFFER" | wc -m | bc)
+    CURSOR=$buflen   # if this is messing up try: CURSOR=9999999
+    zle set-mark-command
+    while [[ $CURSOR > 0 ]]; do
+        zle beginning-of-line
+    done
+}
+zle -N select-all
+bindkey -e "\ea" select-all
+
+
 # Copy / Cut / Paste shell selection using pbcopy/pbpaste. Option + C (V) (X)
 pb-copy-region () {
   zle copy-region-as-kill
   print -rn $CUTBUFFER | pbcopy
   ((REGION_ACTIVE = 0))
 }
-
 pb-cut-region () {
   zle copy-region-as-kill
   print -rn $CUTBUFFER | pbcopy
   zle kill-region
 }
-
 pb-yank () {
   CUTBUFFER=$(pbpaste)
   zle yank
