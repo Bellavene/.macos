@@ -50,12 +50,16 @@ bindkey -r '\Cv'
 bindkey '\Cv' insert-last-command-output
 
 
-# FZF List and kill processes
+# FZF List and kill processes. Option + K
 fzf-kill() {
 ps -aevrc | fzf --layout=reverse-list --bind "alt-w:reload(ps -aevr)" | xargs kill -9 &> /dev/null
 }
 zle -N fzf-kill
 bindkey '\ek' fzf-kill
+
+
+# Uninstall macos applications through FZF and app-cleaner.sh
+bindkey -s "\eu" "uninstall\n"
 
 
 # Escape = reset prompt line
