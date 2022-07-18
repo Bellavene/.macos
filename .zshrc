@@ -72,6 +72,9 @@ zle -N double_escape
 bindkey '\E' kill-whole-line
 bindkey '\E\E' double_escape
 
+# Option + Q exit
+bindkey '\eq' double_escape
+
 
 # List open ports
 listening() {
@@ -215,6 +218,10 @@ zle -N pb-cut-region
 bindkey -e '\ex' pb-cut-region
 zle -N pb-yank
 bindkey '\ev' pb-yank
+
+
+# Option + z Undo
+bindkey '\ez' undo
 
 
 # Outputs internal and external IP addresses
