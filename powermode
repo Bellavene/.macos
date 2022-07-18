@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+powermode=`sudo pmset -g | grep lowpowermode`
+if [[ $powermode =~ "0" ]]
+    then
+    sudo pmset -a lowpowermode 1
+    # (/opt/homebrew/opt/alerter/bin/alerter -timeout 5 -title Powermode -message Low &>/dev/null &)
+    echo "Low power mode on" 
+    else
+    sudo pmset -a lowpowermode 0
+    # (/opt/homebrew/opt/alerter/bin/alerter -timeout 5 -title Powermode -message high &>/dev/null &)
+    echo "Low power mode off"
+fi
