@@ -190,7 +190,7 @@ zle -N select-all
 bindkey -e "\ea" select-all
 
 
-# Copy / Cut / Paste shell selection using pbcopy/pbpaste. Option + C (V) (X)
+# Copy / Cut / Paste shell selection using pbcopy/pbpaste. Option + C / V / X
 pb-copy-region () {
   zle copy-region-as-kill
   print -rn $CUTBUFFER | pbcopy
