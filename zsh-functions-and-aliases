@@ -129,7 +129,7 @@ zle -N 'edit-command-line'
 bindkey '\ee' edit-command-line
 
 
-# Prompt Selection / Shift + direction
+# Prompt Selection / Shift + direction / Shift + Option + direction
 shift-arrow() {
   ((REGION_ACTIVE)) || zle set-mark-command
   zle $1
