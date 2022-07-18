@@ -86,7 +86,7 @@ vivaldi-history() {
   local cols sep
   cols=$(( COLUMNS / 3 ))
   sep='{::}'
-  #  Change word "Vivaldi" to "Chrome/Google Chrome" or "Chromium" or "Brave" or etc.
+  #  Change word "Vivaldi" to "Chromium" or "Brave" or etc.
   cp -f ~/Library/Application\ Support/Vivaldi/Default/History /tmp/h
 
   sqlite3 -separator $sep /tmp/h \
