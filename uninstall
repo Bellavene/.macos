@@ -1,1 +1,2 @@
+#!/bin/zsh
 sh app-cleaner.sh "$(find /Applications ~/Applications -maxdepth 2 -name "*.app" | fzf )"
