@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ "$(uname -s)" != 'Darwin' ]]; then
-  echo 'Sorry, this script only works on macOS'
-  exit 1
-fi
-
-osascript -e "set volume input volume $1"

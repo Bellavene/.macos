@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+osascript -e "set volume input volume $1"
