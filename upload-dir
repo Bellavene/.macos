@@ -1,0 +1,1 @@
+python3 ~/CLI/upload.py -p -z -r --saveurls ~/.urls $1; cat ~/.urls | pbcopy; truncate -s 0 ~/.urls
