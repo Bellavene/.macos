@@ -378,7 +378,7 @@ end)
 
 -- Bind lights ON/OFF
 hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "0", function ()
-  os.execute("sh /Users/Klutchevski/.config/HueToggle.sh")
+  os.execute("sh ~/.config/HueToggle.sh")
 end)
 
 -- Copy Vivaldi active URL
