@@ -1,36 +1,16 @@
 export HOMEBREW_NO_ANALYTICS=1
 
 # PROMPT=""
-
 # # Change cursor to I-beam
 # printf '\033[5 q\r'
-#
 # # Move prompt to the bottom
 # repeat $LINES print
 
-
-# Path to your oh-my-zsh installation.
 export ZSH="/Users/Klutchevski/.oh-my-zsh"
 
 CASE_SENSITIVE="true"
 
-# Disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
-
-# Automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# If pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Enable command auto-correction.
-# ENABLE_CORRECTION="true"
 
 plugins=(git macos tumult fzf fzf-tab iterm2 magic-enter zsh-autosuggestions zsh-completions colored-man-pages web-search copypath jsontools)
 source ~/.oh-my-zsh/custom/plugins/fzf-tab/fzf-tab.plugin.zsh
@@ -41,11 +21,6 @@ export ENHANCD_FILTER='fzf'
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_HYPHEN_NUM=80
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # iTerm integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
@@ -55,14 +30,14 @@ export PATH="/usr/local/sbin:/opt/homebrew/bin:/usr/local/opt/m4/bin:/Users/Klut
 
 export GOPATH="/Users/Klutchevski/Go"
 
-alias z="micro ~/.zshrc"
-alias ohmyzsh="micro ~/.oh-my-zsh"
-
 export EDITOR="micro"
 export VISUAL="micro"
 export BROWSER="open -a Vivaldi"
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
+
+alias z="micro ~/.zshrc"
+alias ohmyzsh="micro ~/.oh-my-zsh"
 
 alias ll="ls -alG"
 alias port='sudo lsof -i -n -P | grep TCP'
@@ -75,7 +50,6 @@ alias w="watch -d -n 2 'ls -rtlh | tail'"
 alias W='curl -s "wttr.in/?format=3"'
 alias wm='curl v3.wttr.in/Moscow.sxl'
 alias moon='curl wttr.in/moon'
-alias powermac='wakeonlan 00:0A:95:A7:D6:AE'
 alias freeram='sudo purge'
 
 # Delete local Time Machine snapshots
@@ -99,7 +73,6 @@ alias n=newsboat
 alias o=open
 alias h=navi
 alias gdrive='rclone cmount --daemon --allow-other --vfs-read-chunk-size 64M --vfs-cache-mode full --no-checksum --dir-cache-time 96h --umask 002 --vfs-write-wait 10s --write-back-cache Exchange: /Users/Klutchevski/Exchange'
-# alias M=musikcube
 # alias m=cmus
 alias M='~/.config/cmus/cmus-cover-art/display.sh'
 alias music='cmus'
@@ -122,9 +95,7 @@ alias dr='aria2p resume -a'
 alias dp='aria2p pause -a -f'
 alias download='aria2p add'
 alias check='lynis audit system'
-alias sherlock='cd ~/CLI/Sherlock && python3 sherlock'
 # alias upload='transfersh'
-# alias up='ffsend upload'
 alias up='upload'
 alias u='upload'
 alias code='open -a visual\ studio\ code'
@@ -148,8 +119,6 @@ alias space=diskonaut
 alias keycodes="xxd -psd"
 alias keycodes2="sed -n l"
 alias keycodes3="infocmp -cL"
-# alias "rm -rf"=trash
-# alias "rm"=trash
 alias oscilloscope='catnip -b ffmpeg-avfoundation -fg 029 -ct 029'
 alias osc='catnip -b ffmpeg-avfoundation -fg 029 -ct 029'
 alias remove='mdfind -name $1 | vipe | xargs -L 1 -I {} rm -rf {}'
@@ -165,8 +134,10 @@ alias calendar=calcure
 alias cal=calcure
 alias note='notes add -e'
 alias iphone-reboot='idevicediagnostics restart'
+
 # alias pass='security find-generic-password -wa'
 alias pass=wifi-pass
+
 # Sum of 3rd column of a file
 alias summa="awk '{ x += $3 } END { print x }'"
 
@@ -175,7 +146,6 @@ alias -g docs=~/Documents
 alias -g shots=~/Pictures/Screenshots
 alias -g projects=~/Projects
 alias -g sd=/Volumes/Untitled
-
 
 # File exstensions handling
 alias -s lua="micro"
@@ -191,10 +161,8 @@ alias -s tiff="ascii-image-converter -C"
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080,bg=black"
 
-
 # Ranger file manager running indicator
 if [ -n "$RANGER_LEVEL" ]; then export PS1="[]$PS1"; fi
-
 
 # FZF default options
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -205,9 +173,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
  --color=info:#3aa6ff,pointer:#00a10e,gutter:-1
  --color=marker:#3aa6ff,spinner:#3aa6ff,header:#3aa6ff'
 
-
-## Other preview methods for fzf
-#
+# Other preview methods for fzf
 # --preview='bat -p --color=always --paging=never {}' --bind shift-up:preview-page-up,shift-down:preview-page-down --preview-window="70%:wrap" --preview-window noborder
 # --preview='[[ ! -z {} ]] && rga --rga-adapters=+pdfpages --pretty --context 5 {q} {}' --bind shift-up:preview-page-up,shift-down:preview-page-down --preview-window="70%:wrap" --preview-window noborder
 
@@ -218,7 +184,7 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':fzf-tab:*' continuous-trigger 'SPACE'
 
-# bind to double tab?
+# bind to double tab
 fzf-tab-partial-and-complete() {
     if [[ $LASTWIDGET = 'fzf-tab-partial-and-complete' ]]; then
         fzf-tab-complete
@@ -234,13 +200,13 @@ fzf-tab-partial-and-complete() {
 # # bindkey '^I^I' fzf-tab-partial-and-complete
 # bindkey '^I^I' fzf-cd-widget
 
-
 # insert last command result
 zmodload -i zsh/parameter
 insert-last-command-output() {
   LBUFFER+="$(eval $history[$((HISTCMD-1))])"
 }
 zle -N insert-last-command-output
+
 # Ctrl + V / Option + I / Insert last output
 bindkey -r '\ei'
 bindkey '\ei' insert-last-command-output
@@ -249,7 +215,6 @@ bindkey '\Cv' insert-last-command-output
 
 # FZF History
 bindkey "${key[Up]}" fzf-history-widget
-
 
 # FZF Kill
 fzf-kill() {
@@ -261,8 +226,7 @@ bindkey '\ek' fzf-kill
 # bindkey -s '\eq' 'ps -aevrc | fzf --layout=reverse-list | xargs kill -9\n'
 # bindkey -s '\ew' 'ps -aevr | fzf --layout=reverse-list | xargs kill -9\n'
 
-# Escape = reset prompt line
-# Double Escape = quit
+# Escape = reset prompt line / Double Escape = quit
 double_escape() {
 zle kill-whole-line
 exit
@@ -271,16 +235,13 @@ zle -N double_escape
 bindkey '\E' kill-whole-line
 bindkey '\E\E' double_escape
 
-
 zstyle ':fzf-tab:complete:(\\|*/|)man:*' fzf-preview 'man $word'
-
 
 # Edit command line {{{
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^E' edit-command-line
 # }}}
-
 
 # listen port
 listening() {
@@ -292,7 +253,6 @@ listening() {
         echo "Usage: listening [pattern]"
     fi
 }
-
 
 # Alt+G Browse vivaldi history
 vivaldi-history() {
@@ -311,10 +271,8 @@ vivaldi-history() {
 zle     -N   vivaldi-history
 bindkey '\eg' vivaldi-history
 
-
 bindkey '\eq' double_escape
 bindkey '\ez' undo
-
 
 # cd into the directory of the selected file
 s() {
@@ -322,7 +280,6 @@ s() {
    local dir
    file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
-
 
 # Open path in finder
 function ofd_bind {
@@ -340,13 +297,11 @@ zle accept-line
 zle -N cdf_bind
 bindkey "^[?" cdf_bind
 
-
 # find-in-file - usage: fif <searchTerm>
 # fif() {
   # if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   # rg --files-with-matches --no-messages "$1" | fzf --border=none --preview-window nohidden --multi --preview "highlight -O ansi -l {} 2> /dev/null | rg --no-line-number --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
 # }
-
 fif() {
 	RG_PREFIX="rga --files-with-matches"
 	local file
@@ -373,7 +328,6 @@ bindkey '\es' '_fif'
 
 bindkey '\ef' fzf-file-widget
 
-
 # Enhancd
 _enhancd() {
 prefix="cd"
@@ -383,7 +337,6 @@ zle accept-line
 }
 zle -N _enhancd
 bindkey '\ed' _enhancd
-
 
 # Upload files and get link
 transfer(){ if [ $# -eq 0 ];then echo "No arguments specified.\nUsage:\n transfer <file|directory>\n ... | transfer <file_name>">&2;return 1;fi;if tty -s;then file="$1";file_name=$(basename "$file");if [ ! -e "$file" ];then echo "$file: No such file or directory">&2;return 1;fi;if [ -d "$file" ];then file_name="$file_name.zip" ,;(cd "$file"&&zip -r -q - .)|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null,;else cat "$file"|curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;fi;else file_name=$1;curl --progress-bar --upload-file "-" "https://transfer.sh/$file_name"|tee /dev/null;fi;}
@@ -435,7 +388,6 @@ alias o='window'
 zle -N 'edit-command-line'
 bindkey '\ee' edit-command-line
 
-
 # ALT-P - View in ASCII selected file(s)
 ascii-art() {
 	local files
@@ -444,7 +396,6 @@ ascii-art() {
 }
 zle -N ascii-art
 bindkey -s '\ep' 'ascii-art^M'
-
 
 # Alt+Shift+S to prepend "sudo " to line
 function _insert_sudo {
@@ -455,14 +406,11 @@ CURSOR=$(($CURSOR + $#prefix + 1))
 zle -N insert-sudo _insert_sudo
 bindkey "\eS" insert-sudo
 
-
 # Alt+Shift+R Reset prompt
 bindkey -s "\eR" "reset\n"
 
-
 # Alt+A Command Bookmarks
 # source ~/CLI/fzf-command-bookmarks.sh
-
 
 # Cheat sheet Alt+H
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/cheat-fzf/cht-fzf.sh" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/cheat-fzf/cht-fzf.sh"
@@ -472,10 +420,8 @@ function chtsh-fzf {
 zle -N chtsh-fzf
 bindkey "\eh" chtsh-fzf
 
-
 # App cleaner / Uninstall
 bindkey -s "\eu" "uninstall\n"
-
 
 # Alt-Y Youtube FZF
 # function youtubefzf {
@@ -493,13 +439,11 @@ function _youtubefzf {
 zle -N _youtubefzf
 bindkey "\ey" _youtubefzf
 
-
 function fzf-open {
     open "$(fzf)"
 }
 zle -N fzf-open
 bindkey "\eo" fzf-open
-
 
 # Alt+R Rename files in folder
 function rename-files {
@@ -508,7 +452,6 @@ function rename-files {
 zle -N rename-files
 bindkey "\er" rename-files
 
-
 # # Alt+A App Launcher
 # function _launcher {
     # launcher
@@ -516,9 +459,7 @@ bindkey "\er" rename-files
 # zle -N _launcher
 # bindkey "\ea" _launcher
 
-
 bindkey -s '^D' ''
-
 
 # Alt + Left / Right
 bindkey "^[[1;9C" forward-word
@@ -548,7 +489,6 @@ pb-yank () {
 }
 zle -N pb-yank
 bindkey '\ev' pb-yank
-
 
 # Selection
 shift-arrow() {
@@ -595,10 +535,8 @@ select-all() {
 zle -N select-all
 bindkey -e "\ea" select-all
 
-
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-
 
 # print hex value of a number
 hex() {
@@ -611,13 +549,13 @@ return 1
 fi
 }
 
-## Fish shell like syntax highlighting for Zsh
-## @link: http://github.com/zsh-users/zsh-syntax-highlighting
+# Fish shell like syntax highlighting for Zsh
+# @link: http://github.com/zsh-users/zsh-syntax-highlighting
 # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 # ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red') # To have commands starting with `rm -rf` in red:export PATH="/usr/local/opt/m4/bin:$PATH"
-#
-# # Another syntax highlighting
+
+# Another syntax highlighting
 source /opt/homebrew/Cellar/zsh-syntax-highlighting/0.8.0/zsh-syntax-highlighting.zsh
 
 # # iTerm tab colors
@@ -642,7 +580,6 @@ alias ip="ipl; ipp"
 random_hex() { for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc | tr '[A-Z]' '[a-z]'); done; }
 look_busy() { clear; while true; do head -n 500 /dev/urandom | hexdump -C | grep --color=auto "`random_hex` `random_hex`"; done; }
 
-
 # Press `C-x H`, then some key combination for which you want the name of the
 # zle function which is invoked, like `C-x h`, and you'll see something like:
 #
@@ -663,7 +600,6 @@ setopt inc_append_history     # write to the history file immediately, not when 
 setopt share_history          # share history between all sessions
 # set +o prompt_cr +o prompt_sp
 # unsetopt PROMPT_SP
-
 setopt PROMPT_CR
 setopt PROMPT_SP
 export PROMPT_EOL_MARK=""
