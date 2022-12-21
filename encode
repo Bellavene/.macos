@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+now=$(date +"%y%m%d")
+
+for f in "$@"
+    do
+        name=$(basename "$f")
+        dir=$(dirname "$f")
+
+~/.cargo/bin/ffpb -i "$f" \
+        -c:v h264_videotoolbox \
+        -b:v 8000k \
+        -b:a 320k \
+"$dir/$now ${name%.*}.mp4"
+
+        # -vf scale=-2:720 \
+
+# ~/.cargo/bin/ffpb -i "$f" -c:v h264_videotoolbox -vf scale=-2:720 -b:v 8000k -b:a 128k "$dir/$now ${name%.*}.mp4"
+
+done

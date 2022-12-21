@@ -1,0 +1,14 @@
+osascript - "$@" <<EOF
+on run argv
+ set cmd to argv
+      tell application "iTerm2"
+        tell current session of current window
+          set newSession to (split horizontally with same profile)
+          tell newSession
+            write text "$@"
+            select
+          end tell
+        end tell
+      end tell
+end run
+EOF

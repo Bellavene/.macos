@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+osascript - "$@" <<EOF
+on run argv
+	set thePath to POSIX file (item 1 of argv)
+	tell application "Finder" to reveal thePath
+end run
+EOF
+
+osascript -e "tell application \"System Events\" to keystroke \"r\" using {control down, command down, option down, shift down}"

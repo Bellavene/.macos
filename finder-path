@@ -1,0 +1,1 @@
+cd "$(osascript -e 'tell app "Finder"' -e 'POSIX path of (insertion location as alias)' -e 'end tell')"
