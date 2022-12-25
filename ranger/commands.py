@@ -261,15 +261,14 @@ class termplug(Command):
         try:
             f = self.rest(1)
             if not do_preview:
-                self.fm.execute_console(f"shell -s finder-close")
+                self.fm.execute_console(f"shell -s killall mpv-bundle")
             elif not termplug:
                 self.fm.notify(f"termplug script not found")
             elif os.path.isfile(f):
-                # self.fm.execute_console(f"shell -s open -R '{f}'; open /Applications/iTerm.app")
-                self.fm.execute_console(f"shell -s finder-ranger-path '{f}'")
-                # self.fm.execute_console(f"follow_files_in_finder")
+                self.fm.execute_console(f"shell -s termplug '{f}'")
         except Exception as e:
             self.fm.notify(e)
+
 
 
 # Quicklook / Follow files in Finder
