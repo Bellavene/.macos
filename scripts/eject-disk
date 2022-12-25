@@ -5,4 +5,4 @@ if [[ "$(uname -s)" != 'Darwin' ]]; then
   exit 1
 fi
 
-exec ls -d /Volumes/* | fzf --layout=reverse-list --bind 'alt-c:execute-silent(echo {} | pbcopy)+abort' -e -i | xargs hdiutil detach
+exec ls -d /Volumes/* | fzf --layout=reverse-list --bind 'alt-c:execute-silent(echo {} | pbcopy)+abort' -e -i | sed "s/^/'/;s/$/'/" | xargs hdiutil detach
