@@ -1,2 +1,7 @@
 #!/bin/zsh
+
+# Open document with specific application in FZF. Search for applications with "find".
 open -a "$(find /Applications ~/Applications /System/Applications -maxdepth 2 -name "*.app" | xargs -L1 -I{} basename "{}" .app | sort -n | fzf )" "$1" &> /dev/null
+
+# Same but uses macos spotlight (mdfind) which is faster.
+# open -a "$(mdfind -onlyin /Applications -onlyin /System/Applications -onlyin ~/Applications "kMDItemKind == 'Application'" | xargs -L1 -I{} basename "{}" .app | sort -n | fzf )" "$1" &> /dev/null
