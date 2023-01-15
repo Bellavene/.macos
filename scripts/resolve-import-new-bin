@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+
+import sys
+from ResolveLib.python_get_resolve import GetResolve
+import ResolveLib.ianresolvelib as r
+import DaVinciResolveScript as dvr_script
+# import re
+# import subprocess
+
+if len(sys.argv) < 1:
+	print("No defined path")
+	sys.exit()
+
+resolve = dvr_script.scriptapp("Resolve")
+projectManager = resolve.GetProjectManager()
+project = projectManager.GetCurrentProject()
+mediapool = project.GetMediaPool()
+timelineName = "Source new"
+root = mediapool.GetRootFolder()
+folder = mediapool.AddSubFolder(root, timelineName)
+# timeline = mediapool.CreateEmptyTimeline(timelineName)
+# timeline = project.GetCurrentTimeline()
+# mediaPath = '/Users/Klutchevski/Projects/TableTop/141222/'
+mediaPath = sys.argv[1]
+
+# # Get the mediastorage
+# ms = resolve.GetMediaStorage()
+# # Add all the files of the given path to the mediaPool
+# added = ms.AddItemListToMediaPool(mediaPath)
+clips = resolve.GetMediaStorage().AddItemListToMediaPool(mediaPath)
+# for clip in clips:
