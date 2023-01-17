@@ -1,0 +1,54 @@
+#!/bin/zsh
+currentsp=$(yabai -m query --spaces --space | jq '.index')
+windowcount=$(yabai -m query --windows --space | jq -r '.[]."is-floating"' | grep false | wc -l)
+excludes="Archive Utility\|Menuwhere\|Color Picker\|xQuartz\|VirtualBox WM"
+countexcludes=$(yabai -m query --windows --space | jq -r '.[].app' | grep "${excludes}" | wc -l)
+hiddenwindows=$(yabai -m query --windows --space | jq -r '.[]."is-visible"' | grep false | wc -l)
+windowcount="$((windowcount - hiddenwindows - countexcludes))"
+
+if [[ "$currentsp" == 5 ]]
+	then
+		yabai -m config \
+			--space 5 top_padding    100 \
+			--space 5 bottom_padding 100 \
+			--space 5 left_padding   800 \
+			--space 5 right_padding  800 
+	else
+		case $windowcount in
+			[0-1])
+				yabai -m config \
+					--space mouse top_padding    100 \
+					--space mouse bottom_padding 100 \
+					--space mouse left_padding   950 \
+					--space mouse right_padding  950 
+				;;
+			2)
+				yabai -m config \
+					--space mouse top_padding    150 \
+					--space mouse bottom_padding 150 \
+					--space mouse left_padding   500 \
+					--space mouse right_padding  500 
+				;;
+			[3-4])
+				yabai -m config \
+					--space mouse top_padding    70 \
+					--space mouse bottom_padding 70 \
+					--space mouse left_padding   200 \
+					--space mouse right_padding  200 
+				;;
+			5)
+				yabai -m config \
+					--space mouse top_padding    40 \
+					--space mouse bottom_padding 40 \
+					--space mouse left_padding   40 \
+					--space mouse right_padding  40 
+				;;
+			*)
+				yabai -m config \
+					--space mouse top_padding    40 \
+					--space mouse bottom_padding 40 \
+					--space mouse left_padding   40 \
+					--space mouse right_padding  40 
+				;;
+		esac
+fi
