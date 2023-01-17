@@ -9,6 +9,7 @@ local SKIP_APPS={
 		['com.apple.inputmethod.EmojiFunctionRowItem']=true,
 		['com.apple.quicklook.QuickLookUIService']=true,
 		['com.apple.WebKit.WebContent']=true}
+-- put in console repeatedly hs.window._timed_allWindows() to get apps and services that slows hammerpsoon down
 
 -- Config reload hotkey
 
