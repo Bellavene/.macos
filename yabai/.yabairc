@@ -1,21 +1,22 @@
 #!/bin/zsh
 
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# yabai -m signal --add event=display_removed action="sudo yabai --load-sa"
+# yabai -m signal --add event=display_added action="sudo yabai --load-sa"
 # yabai -m config debug_output on
 
-yabai -m config 				 				\
+yabai -m config 				 		\
 	layout                       bsp			\
 	top_padding                  8				\
 	bottom_padding               8				\
 	left_padding                 8				\
 	right_padding                8				\
 	window_gap                   8				\
-	window_origin_display		 default		\
 	window_animation_duration    0.0 			\
 	window_animation_frame_rate  60				\
-	window_origin_display        default		\
-	window_placement             second_child	\
+	window_origin_display        focused			\
+	window_placement             second_child		\
 	window_topmost               off			\
 	split_ratio                  0.5			\
 	split_type                   auto 			\
@@ -27,24 +28,29 @@ yabai -m config 				 				\
 	normal_window_opacity        0.95 			\
 	window_opacity_duration      0.2 			\
 	mouse_drop_action            swap 			\
-	window_border                off			\
+	window_border                on				\
 	window_border_hidpi          off			\
-	window_border_width          1 				\
-	window_border_radius         11 			\
+	window_border_width          4 				\
+	window_border_radius         10 			\
 	window_border_blur           off			\
-	active_window_border_color   0xffc66500 	\
-	normal_window_border_color   0x003a91ce 	\
-	insert_feedback_color        0xffbd6000 	\
-	window_shadow                off			\
-	window_zoom_persist          on				\
+	active_window_border_color   0xffffa100 		\
+	normal_window_border_color   0x003a91ce 		\
+	insert_feedback_color        0xffbd6000 		\
+	window_shadow                on				\
+	window_zoom_persist          off			\
 	mouse_modifier               fn				\
-	mouse_action2                move			\
-	mouse_action1                resize			
+	mouse_action1                move			\
+	mouse_action2                resize			
 
+# Auto Stacking per app
+#######################
+yabai -m signal --add event=window_created action="~/CLI/yabai-stack-app"
+# yabai -m signal --add event=window_created app="^iTerm2$" action="~/CLI/yabai-stack-iterm"
+# yabai -m signal --add event=window_created app="^Mail$" action="~/CLI/yabai-stack-mail"
 
 # Sketchybar
 ############
-# yabai -m config external_bar                 all:34:0
+# yabai -m config external_bar all:34:0
 # yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 # yabai -m signal --add event=window_created action="sketchybar --trigger windows_on_spaces"
 # yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
@@ -54,6 +60,13 @@ yabai -m config 				 				\
 ############################
 # yabai -m signal --add event=window_created action='~/CLI/yabai-count-two-windows'
 # yabai -m signal --add event=window_destroyed action='~/CLI/yabai-count-two-windows'
+# yabai -m signal --add event=window_minimized action='~/CLI/yabai-count-two-windows'
+# yabai -m signal --add event=window_deminimized action='~/CLI/yabai-count-two-windows'
+
+# yabai -m signal --add event=window_created action='yabai -m space --balance x-axis'
+# yabai -m signal --add event=window_destroyed action='yabai -m space --balance x-axis'
+# yabai -m signal --add event=window_minimized action='yabai -m space --balance x-axis'
+# yabai -m signal --add event=window_deminimized action='yabai -m space --balance x-axis'
 
 # Autobalance toggle
 ####################
@@ -61,7 +74,7 @@ yabai -m config 				 				\
 
 # Floating windows
 ##################
-yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || yabai -m window $YABAI_WINDOW_ID --toggle float'
+# yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".\"can-resize\" or .\"is-floating\"" || yabai -m window $YABAI_WINDOW_ID --toggle float'
 
 # Back from Zoom Fullscreen
 ###########################
@@ -70,23 +83,9 @@ win_id=$(yabai -m query --windows --space | jq "map(select(.\"has-fullscreen-zoo
 if [[ $win_id != "null" ]]; then yabai -m window $win_id --toggle zoom-fullscreen; fi
 fi'
 
-#File Manager on 
-#################
+#File Manager
+#############
 # yabai -m signal --add title="File Manager" event=window_created action="yabai -m window --swap first; yabai -m window --ratio abs:0.25"
-
-# yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq -er ".resizable == 0 and .floating == 0" && yabai -m window $YABAI_WINDOW_ID --toggle float layer=above'
-
-# yabai -m signal --add event=window_created action='yabai -m query --windows --window $YABAI_WINDOW_ID | jq '.[] | select(.title == "File Manager")' && yabai -m window $YABAI_WINDOW_ID action="yabai -m window --warp last"
-
-# yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent || yabai -m window --focus first"
-
-# yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent || yabai -m window --focus first"
-
-# # focus window after active space changes
-# yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
-# # focus window after active display changes
-# yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
-
 
 yabai -m rule --add app="System\ Settings" manage=off
 yabai -m rule --add app="The\ Unarchiver" manage=off layer=above
@@ -108,10 +107,15 @@ yabai -m rule --add title='LuLu\ Alert' manage=off
 yabai -m rule --add title='Alert$' manage=off
 yabai -m rule --add title='$Alert' manage=off
 yabai -m rule --add title='$Info' manage=off
+yabai -m rule --add title='Preferences' manage=off
 yabai -m rule --add title='iStat Menus Status' manage=off opacity=1.0
-yabai -m rule --add app="(Copy|Bin|About This Mac|Info)" manage=off layer=above
+yabai -m rule --add app="(Copy|Bin|Move|About This Mac|Info|Preferences)" manage=off layer=above
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off layer=above
 yabai -m rule --add app="^Vivaldi" title="(Picture in Picture)" manage=off opacity=1.0
+yabai -m rule --add app="^Vivaldi" display=2
 yabai -m rule --add app="^Finder$" opacity=1.0
+yabai -m rule --add app="^mpv$" opacity=1.0
+yabai -m rule --add app="^IINA$" opacity=1.0
+yabai -m rule --add app="^Vivaldi$" opacity=1.0
 
 echo "yabai configuration loaded.."
