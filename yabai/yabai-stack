@@ -1,10 +1,7 @@
-# window=$(/opt/homebrew/bin/yabai -m query --windows --window | /opt/homebrew/bin/jq -r '.id') && /opt/homebrew/bin/yabai -m window north --stack $window || (/opt/homebrew/bin/yabai -m window $window --toggle float && /opt/homebrew/bin/yabai -m window $window --toggle float)
-
-dir=$1
+#!/bin/zsh
 # dir should be one of east,west,north,south
-
+dir=$1
 window=$(/opt/homebrew/bin/yabai -m query --windows --window | /opt/homebrew/bin/jq -r '.id')
-
 # Stack this window onto existing stack if possible
 /opt/homebrew/bin/yabai -m window $dir --stack $window
 if [[ $? -ne 0 ]]; then
