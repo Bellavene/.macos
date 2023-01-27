@@ -112,7 +112,7 @@ modal:bind( 'SHIFT', 'UP', function() modal.triggered = true; os.execute("/opt/h
 -- modal:bind( '', 'UP', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --focus north  || /opt/homebrew/bin/yabai -m display --focus north") end )
 
 -- Cycle stacks CMD + `
-hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "`", function ()
+hs.hotkey.bind({ "cmd" }, "`", function ()
   os.execute("/opt/homebrew/bin/yabai -m window --focus stack.next || /opt/homebrew/bin/yabai -m window --focus stack.first
 ")
 end)
