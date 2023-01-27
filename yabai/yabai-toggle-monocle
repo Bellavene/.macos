@@ -1,0 +1,1 @@
+/opt/homebrew/bin/yabai -m space --layout $( [ "$(/opt/homebrew/bin/yabai -m query --spaces --space | /opt/homebrew/bin/jq -re .type)" = 'bsp' ] && echo 'stack' || echo 'bsp' )

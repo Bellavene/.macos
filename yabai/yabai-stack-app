@@ -1,0 +1,22 @@
+#!/bin/zsh
+
+# Get all the windows on current space
+######################################
+local CURRENT_DISPLAY=$(/opt/homebrew/bin/yabai -m query --windows --window | /opt/homebrew/bin/jq '.display')
+local WINDOWS_ARRAY=$(/opt/homebrew/bin/yabai -m query --windows --space $(/opt/homebrew/bin/yabai -m query --spaces --space | /opt/homebrew/bin/jq '.index') --display $CURRENT_DISPLAY | /opt/homebrew/bin/jq -r 'map(select(.["is-minimized"]==false and .["is-floating"]==false))')
+
+# Get the number of windows on the current space
+################################################
+local NUMBER_OF_WINDOWS=$(echo $WINDOWS_ARRAY | /opt/homebrew/bin/jq -r 'length')
+local WINDOW=$(/opt/homebrew/bin/yabai -m query --windows --window | /opt/homebrew/bin/jq -r '.id')
+
+# If we are Less than or equal to 2 windows on current space exit script
+########################################################################
+if (( $NUMBER_OF_WINDOWS > 2 )); then
+	# Stack first instance of application when more than 2 windows
+	##############################################################
+	local APP_ID=$(echo $WINDOWS_ARRAY | jq -r '(.[] | select(."has-focus")) as {$id, $app} | map( select( .app==$app and ((."is-hidden" or ."is-minimized") | not) ) )' | /opt/homebrew/bin/jq -r 'map(select(.app)) | .[] | .id' | awk 'END{print}')
+	/opt/homebrew/bin/yabai -m window $APP_ID --stack $WINDOW
+else
+    exit 1
+fi
