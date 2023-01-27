@@ -9,6 +9,7 @@ local SKIP_APPS={
 		['com.apple.inputmethod.EmojiFunctionRowItem']=true,
 		['com.apple.quicklook.QuickLookUIService']=true,
 		['com.apple.WebKit.WebContent']=true}
+
 -- put in console repeatedly hs.window._timed_allWindows() to get apps and services that slows hammerpsoon down
 
 -- Config reload hotkey
@@ -20,114 +21,7 @@ end)
 -- Misc
 hs.allowAppleScript(true)
 
--- Yabai
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "c", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --warp prev || /opt/homebrew/bin/yabai -m window --warp last")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "v", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --warp next || /opt/homebrew/bin/yabai -m window --warp first")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "w", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --display recent; /opt/homebrew/bin/yabai -m display --focus recent")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "d", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m space --focus next")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "t", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --toggle split")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "p", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --toggle sticky --toggle topmost --toggle pip")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "1", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --focus prev || /opt/homebrew/bin/yabai -m space --focus prev")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "2", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --focus next || /opt/homebrew/bin/yabai -m space --focus next")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "1", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --focus prev || /opt/homebrew/bin/yabai -m window --focus last")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "2", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --focus next || /opt/homebrew/bin/yabai -m window --focus first")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "3", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --swap next || /opt/homebrew/bin/yabai -m window --swap first")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "`", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --swap prev || /opt/homebrew/bin/yabai -m window --swap last")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "d", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m display --focus next || /opt/homebrew/bin/yabai -m display --focus first")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "f", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --toggle zoom-fullscreen")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "r", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m space --rotate 270")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "b", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m space --balance")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "g", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m space --toggle padding; /opt/homebrew/bin/yabai -m space --toggle gap")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "i", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --insert north")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "j", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --insert west")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "k", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --insert south")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "l", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --insert east")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "e", function ()
-  -- os.execute("/bin/expr $(/opt/homebrew/bin/yabai -m query --windows --window | /opt/homebrew/bin/jq .frame.x) \\< 100 && /opt/homebrew/bin/yabai -m window --resize right:60:0 || /opt/homebrew/bin/yabai -m window --resize left:60:0")
--- end)
--- 
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "q", function ()
-  -- os.execute("/bin/expr $(/opt/homebrew/bin/yabai -m query --windows --window | /opt/homebrew/bin/jq .frame.x) \\< 100 && /opt/homebrew/bin/yabai -m window --resize right:-60:0 || /opt/homebrew/bin/yabai -m window --resize left:-60:0")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "x", function ()
-  -- os.execute("/opt/homebrew/bin/yabai -m window --toggle float; /opt/homebrew/bin/yabai -m window --grid 4:4:1:1:2:2")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "z", function ()
-  -- os.execute("/Users/Klutchevski/CLI/Reyabai")
--- end)
-
--- hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "a", function ()
-  -- os.execute("~/CLI/yabai-cycle-float-windows")
--- end)
-
 -- Enter Hyper Mode when Spacebar is pressed
-
 pressedSpace = function()
   modal.triggered = false
   modal:enter()
@@ -147,12 +41,12 @@ space = hs.hotkey.bind( {}, 'space', pressedSpace, releasedSpace )
 -- Space hyper
 modal = hs.hotkey.modal.new( {}, 'f20' );
 modal:bind( '', 'a', function() modal.triggered = true; os.execute("~/CLI/yabai-cycle-float-windows") end )
-modal:bind( '', 'b', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m space --balance") end )
-modal:bind( 'SHIFT', 'b', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m space --balance x-axis") end )
+modal:bind( '', 'b', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m space --balance x-axis") end )
+modal:bind( 'SHIFT', 'b', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m space --balance") end )
 modal:bind( '', 'c', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --warp prev || /opt/homebrew/bin/yabai -m window --warp last") end )
 modal:bind( '', 'd', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m display --focus next || /opt/homebrew/bin/yabai -m display --focus first") end )
 modal:bind( '', 'e', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --resize right:100:0 || /opt/homebrew/bin/yabai -m window --resize left:100:0") end )
-modal:bind( '', 'f', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --toggle zoom-fullscreen") end )
+modal:bind( '', 'f', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --grid 1:1:0:0:1:1 || /opt/homebrew/bin/yabai -m window --toggle zoom-fullscreen") end )
 modal:bind( '', '`', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --swap largest || /opt/homebrew/bin/yabai -m window --swap recent --focus largest") end )
 modal:bind( '', 'g', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m space --toggle padding; /opt/homebrew/bin/yabai -m space --toggle gap") end )
 modal:bind( '', 'h', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, 'h' ) end )
@@ -167,14 +61,15 @@ modal:bind( '', 'p', function() modal.triggered = true; os.execute("/opt/homebre
 modal:bind( '', 'Q', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --resize right:-100:0 || /opt/homebrew/bin/yabai -m window --resize left:-100:0") end )
 modal:bind( '', 'r', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m space --rotate 270") end )
 -- modal:bind( '', 'r', function() modal.triggered = true; os.execute("~/CLI/yabai-rotate") end )
-modal:bind( '', 's', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, 's' ) end )
+-- modal:bind( '', 's', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --stack recent") end )
+modal:bind( '', 's', function() modal.triggered = true; os.execute("/Users/User/CLI/yabai-stack north") end )
 modal:bind( '', 't', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --toggle split") end )
 modal:bind( '', 'u', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, 'u' ) end )
 modal:bind( '', 'v', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --warp next || /opt/homebrew/bin/yabai -m window --warp first") end )
-modal:bind( '', 'w', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --display recent; /opt/homebrew/bin/yabai -m display --focus recent") end )
+modal:bind( '', 'w', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --display recent; /opt/homebrew/bin/yabai -m display --focus recent; /opt/homebrew/bin/yabai -m space --balance x-axis") end )
 modal:bind( '', 'x', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --toggle float; /opt/homebrew/bin/yabai -m window --grid 4:4:1:1:2:2") end )
 -- modal:bind( '', 'y', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, 'y' ) end )
-modal:bind( '', 'z', function() modal.triggered = true; os.execute("/Users/Klutchevski/CLI/Reyabai") end )
+modal:bind( '', 'z', function() modal.triggered = true; os.execute("/Users/User/CLI/yabai-restart") end )
 modal:bind( '', 'TAB', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, 'TAB'  ) end )
 -- modal:bind( '', '1', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --focus prev || /opt/homebrew/bin/yabai -m space --focus prev || /opt/homebrew/bin/yabai -m space --focus last || /opt/homebrew/bin/yabai -m window --focus last") end )
 -- modal:bind( '', '2', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --focus next || /opt/homebrew/bin/yabai -m space --focus next || /opt/homebrew/bin/yabai -m space --focus first || /opt/homebrew/bin/yabai -m window --focus first") end )
@@ -195,8 +90,8 @@ modal:bind( '', '=', function() modal.triggered = true; hs.eventtap.keyStroke( {
 modal:bind( '', ']', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, ']' ) end )
 modal:bind( '', '[', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, '[' ) end )
 modal:bind( '', ';', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, ';' ) end )
-modal:bind( '', ',', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, ',' ) end )
-modal:bind( '', '.', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, '.' ) end )
+modal:bind( '', ',', function() modal.triggered = true; os.execute("/Users/User/CLI/yabai-prev-stack") end )
+modal:bind( '', '.', function() modal.triggered = true; os.execute("/Users/User/CLI/yabai-next-stack") end )
 modal:bind( '', '/', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, '/' ) end )
 modal:bind( '', '\\', function() modal.triggered = true; hs.eventtap.keyStroke( { "ctrl", "alt", "cmd", "shift" }, '\\' ) end )
 modal:bind( '', 'LEFT', function() modal.triggered = true; os.execute("/opt/homebrew/bin/yabai -m window --resize right:-100:0 || /opt/homebrew/bin/yabai -m window --resize left:-100:0") end )
@@ -224,15 +119,15 @@ end)
 
 -- Hue lights ON/OFF
 hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "0", function ()
-  os.execute("/Users/Klutchevski/CLI/Lights")
+  os.execute("/Users/User/CLI/Lights")
 end)
 
 -- Hue lights up/down
 hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "-", function ()
-  os.execute("/Users/Klutchevski/CLI/Lights dec")
+  os.execute("/Users/User/CLI/Lights dec")
 end)
 hs.hotkey.bind({ "ctrl", "alt", "cmd", "shift" }, "=", function ()
-  os.execute("/Users/Klutchevski/CLI/Lights inc")
+  os.execute("/Users/User/CLI/Lights inc")
 end)
 
 -- Copy active URL or file path of opened document
@@ -875,5 +770,8 @@ end)
 
 -- YabaiBar = require("yabai-bar"):new("/opt/homebrew/bin/yabai")
 -- YabaiBar:update()
+
+-- stackline = require "stackline"
+-- stackline:init()
 
 hs.notify.new({title="Hammerspoon", informativeText="Config loaded"}):send()
