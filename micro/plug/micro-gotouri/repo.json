@@ -1,0 +1,18 @@
+[
+  {
+    "Name": "gotouri",
+    "Description": "plugin to quickly goto uri.",
+    "Tags": [
+      "URI", "URL", "browser", "web"
+    ],
+    "Versions": [
+      {
+        "Version": "1.0.0",
+        "Url": "https://github.com/zongou/micro-urihelper/archive/v1.0.0.zip",
+        "Require": {
+          "micro": ">=2.0.0"
+        }
+      }
+    ]
+  }
+]

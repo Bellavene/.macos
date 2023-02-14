@@ -1,0 +1,21 @@
+{
+    "autosu": true,
+    "colorscheme": "terminal",
+    "fzfarg": "--multi --preview-window nohidden --preview 'highlight -O ansi -l {} 2\u003e /dev/null'",
+    "hlsearch": true,
+    "infobar": false,
+    "parsecursor": true,
+    "paste": true,
+    "pluginrepos": [
+        "https://raw.githubusercontent.com/MuratovAS/micro-fzfinder/main/repo.json"
+    ],
+    "ruler": false,
+    "savecursor": true,
+    "saveundo": true,
+    "softwrap": true,
+    "statusformatl": "$(filename) $(modified)($(line),$(col))",
+    "statusformatr": "$(status.paste)| ft:$(opt:filetype) | $(opt:fileformat) | $(opt:encoding)",
+    "tabmovement": true,
+    "terminal": "iTerm2",
+    "xterm": true
+}
