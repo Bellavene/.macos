@@ -8,6 +8,10 @@ local shell = import("micro/shell")
 local fzfarg =  config.GetGlobalOption("fzfarg")
 
 function fzfinder(bp)
+  --
+  bp:AddTab()
+  local buf,err  = buffer.NewBuffer("ABC", "")
+  --
   if fzfarg == nil then
     fzfarg = "";
   end
@@ -28,10 +32,12 @@ function fzfOutput(output, args)
   if output ~= "" then
     local buf, err = buffer.NewBufferFromFile(output)
     if err == nil then
-      bp:OpenBuffer(buf)
+      -- bp:OpenBuffer(buf)
+      micro.CurPane():OpenBuffer(buf)
     end
   end
 end
+
 
 function init()
   config.MakeCommand("fzfinder", fzfinder, config.NoComplete)
