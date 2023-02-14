@@ -4,6 +4,7 @@
     "fzfarg": "--multi --preview-window nohidden --preview 'highlight -O ansi -l {} 2\u003e /dev/null'",
     "hlsearch": true,
     "infobar": false,
+    "linter": false,
     "parsecursor": true,
     "paste": true,
     "pluginrepos": [
