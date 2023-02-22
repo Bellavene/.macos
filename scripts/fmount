@@ -1,4 +1,5 @@
 #!/bin/zsh
+# fmount ftp://1.1.1.1
 osascript - "$@" <<EOF
 tell application "Finder"
 	mount volume "$@"
