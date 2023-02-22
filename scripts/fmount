@@ -1,0 +1,6 @@
+#!/bin/zsh
+osascript - "$@" <<EOF
+tell application "Finder"
+	mount volume "$@"
+end tell
+EOF
