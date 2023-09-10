@@ -1,0 +1,11 @@
+#!/bin/zsh
+# Call phone number through Facetime / Usage: call +0000000000
+osascript - "$@" <<EOF
+set phone_num to "$@"
+do shell script "open tel://" & quoted form of phone_num
+tell application "System Events"
+    repeat until (exists window 1 of application process "Notification Center")
+        delay 0.1
+    end repeat
+    click UI element "Call" of group 1 of UI element 1 of scroll area 1 of group 1 of window "Notification Center" of application process "Notification Center"
+end tell
