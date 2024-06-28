@@ -1,0 +1,44 @@
+#!/bin/bash
+# Clipboard manager CopyQ through fzf
+
+read -r -d '' copyqjs << EOM
+for (var i = 0; i < size(); i++) {
+  var lines = str(read(i)).split(/[\r\n]+/);
+  var line = "";
+  line = lines;
+  if (line == "") {
+      line = '  image file';
+  }
+  print(i + " " + line + "\n");
+}
+EOM
+
+
+pick="$(echo "$copyqjs" | \
+        /Applications/CopyQ.app/Contents/MacOS/CopyQ eval - | \
+        fzf --preview-window nohidden \
+            --multi \
+            --preview='/Applications/CopyQ.app/Contents/MacOS/CopyQ read {1} | \
+        highlight --out-format=truecolor \
+            --syntax=zsh \
+            --style=base16/bellavene | \
+        rg  -i \
+            --field-match-separator=" " \
+            --field-context-separator=" " \
+            --no-context-separator \
+            --no-line-number \
+            --color=always \
+            --colors=line:style:bold \
+            --colors 'match:bg:magenta' \
+            --colors 'match:fg:black' \
+            --context 50 {q}' | \
+        awk '{print $1}'
+)"
+
+
+if [[ "$pick" != "" ]]; then
+    /Applications/CopyQ.app/Contents/MacOS/CopyQ select "$pick"
+fi
+
+# rg -i --pretty --context 2 {q}
+# --preview='highlight -O ansi --style=base16/bellavene -l {} 2> /dev/null
