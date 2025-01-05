@@ -562,19 +562,6 @@ Install:andUse("RoundedCorners",
 -- AdobeWatcher:start()
 
 
--- Focus terminal on mpv launch
-function mpvTermWatcher(appName, eventType, appObject)
-  if (eventType == hs.application.watcher.launching or hs.application.watcher.terminated) then
-    if (appName == "mpv") then
-      hs.timer.doAfter(0.1, function() os.execute("osascript -e 'tell application (POSIX path of \"/Applications/iTerm.app\") to activate'") end)
-      hs.timer.doAfter(0.3, function() hs.eventtap.keyStroke({ "cmd", "ctrl", "alt", "shift" }, "b") end)
-    end
-  end
-end
-mpvWatcher = hs.application.watcher.new(mpvTermWatcher)
-mpvWatcher:start()
-
-
 -- -- AC/Battery watcher - Bluetooth auto connect
 -- require('ac-or-battery')
 
@@ -661,44 +648,31 @@ mpvWatcher:start()
 
 
 
--- Focus last app window when closing or minimize last Finder window
-
--- wf = hs.window.filter
--- allwindows = wf.new(nil)
--- windows = hs.window.filter.new(hs.window.filter.sortByFocusedLast)
--- -- allwindows:subscribe(wf.windowDestroyed, function (window, appName, reason)
-    -- -- app = hs.application.frontmostApplication()
-    -- -- count = 1
-    -- -- for k,v in pairs(app:visibleWindows()) do
-    -- -- if count < 1 then
-            -- -- windows[#windows]:focus()
-        -- -- end
-    -- -- end
--- -- end)
+-- Focus visible window when a last application window is closed or minimized
 
 wf = hs.window.filter
 allwindows = wf.new(nil)
 -- allwindows:rejectApp('Hammerspoon'):rejectApp('Vivaldi')
 allwindows:subscribe({wf.windowDestroyed, wf.windowMinimized, wf.windowHidden}, function(window, appName, reason)
-    -- local app2 = window:application()
-    local app2 = hs.application.frontmostApplication()
-    local bundle = app2:bundleID()
+    -- local app = window:application()
+    local app = hs.application.frontmostApplication()
+    local bundle = app:bundleID()
     local count = 0
 
-    for k, v in pairs(app2:visibleWindows()) do
+    for k, v in pairs(app:visibleWindows()) do
             count = count + 1
     end
 
-    if app2:bundleID() == "com.apple.finder" then
+    if app:bundleID() == "com.apple.finder" then
         if count < 2 then
-            app2:activate(true)
-            app2:hide()
+            app:activate(true)
+            app:hide()
             return
         end
-    elseif app2:bundleID() == "com.googlecode.iterm2" then
+    elseif app:bundleID() == bundle then
         if count < 1 then
-            app2:activate(true)
-            app2:hide()
+            app:activate(true)
+            app:hide()
             return
         end
     end
