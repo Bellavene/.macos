@@ -3,39 +3,39 @@ yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
 yabai -m config debug_output on
 
-yabai -m config                             \
-	split_ratio                  0.5			    \
-	layout                       bsp			    \
-  window_insertion_point       first        \
-	split_type                   horizontal   \
-	auto_balance                 x-axis       \
-	top_padding                  4				    \
-	bottom_padding               4				    \
-	left_padding                 4				    \
-	right_padding                4				    \
-	window_gap                   8				    \
-	external_bar                 main:0:0     \
-	display_arrangement_order    horizontal	  \
-	window_animation_duration    0.15 			  \
-  window_animation_easing      ease_in_sine \
-	window_origin_display        cursor	  	  \
-	window_placement             first_child	\
-	window_opacity_duration      0.22 			  \
-	window_shadow                on   			  \
-	window_zoom_persist          off 			    \
-	window_opacity               off				  \
-	active_window_opacity        1.0 			    \
-	normal_window_opacity        0.8 		      \
-  insert_feedback_color        0xffc66500   \
-	focus_follows_mouse          autoraise		\
-	mouse_follows_focus          on			      \
-	mouse_drop_action            swap 			  \
-	mouse_modifier               fn				    \
-	mouse_action1                move			    \
+yabai -m config \
+	split_ratio                  0.5 \
+	layout                       bsp \
+  window_insertion_point       	     first \
+	split_type                   horizontal \
+	auto_balance                 x-axis \
+	top_padding                  4 \
+	bottom_padding               4 \
+	left_padding                 4 \
+	right_padding                4 \
+	window_gap                   8 \
+	external_bar                 main:0:0 \
+	display_arrangement_order    horizontal \
+	window_animation_duration    0.15 \
+  window_animation_easing            ease_in_sine \
+	window_origin_display        cursor \
+	window_placement             first_child \
+	window_opacity_duration      0.22 \
+	window_shadow                on \
+	window_zoom_persist          off \
+	window_opacity               off \
+	active_window_opacity        1.0 \
+	normal_window_opacity        0.8 \
+  insert_feedback_color              0xffc66500 \
+	focus_follows_mouse          autoraise \
+	mouse_follows_focus          on \
+	mouse_drop_action            swap \
+	mouse_modifier               fn \
+	mouse_action1                move \
 	mouse_action2                resize
 
-  # menubar_opacity              0.7         \
-  # insert_feedback_color        0xff000000  \
+  # menubar_opacity              0.7 \
+  # insert_feedback_color        0xff000000 \
 
 
 # Back from Zoom Fullscreen
