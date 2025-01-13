@@ -1,0 +1,50 @@
+#!/bin/zsh
+
+RG_PREFIX="rga --column --line-number --no-heading --color=always --smart-case "
+INITIAL_QUERY="${*:-}"
+: | fzf --ansi --disabled --query "$INITIAL_QUERY" \
+    --bind "start:reload:$RG_PREFIX {q}" \
+    --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+    --bind "alt-f:unbind(change,alt-enter)+enable-search+clear-query" \
+    --color "hl:-1:underline,hl+:-1:underline:reverse" \
+    --preview "cat {1} | highlight --out-format=truecolor --syntax=zsh --style=bellavene | rga -i --field-match-separator=\" \" --field-context-separator=\" \" --no-context-separator -n --color=always --colors=line:style:bold --colors \"match:bg:yellow\" --colors \"match:fg:black\" --context 5 {q}" \
+    --wrap \
+    --preview-window nohidden \
+    --preview-window="60%:wrap" \
+    --delimiter : \
+    --bind 'alt-e:execute(micro {1} +{2})' \
+	  --bind 'enter:become(echo "$(echo -n {1})")'
+	  # --bind 'enter:become(echo "$(echo -n {1})" | pbcopy; echo "Copied $(echo -n "{1}")")'
+
+    # bat -f -n --highlight-line {2}
+    # --preview 'highlight -O ansi --style=base16/bellavene -l {1} 2> /dev/null' \
+    # --preview 'highlight -O ansi --style=base16/bellavene -l {1} 2> /dev/null | rga -i --field-match-separator=" " --field-context-separator=" " --no-context-separator --no-line-number --color=always --colors=line:style:bold --colors 'match:bg:magenta' --colors 'match:fg:black' --context 50 {q}' \
+    # --prompt '1. ripgrep> ' \
+
+#
+# set -o pipefail
+# if [[ -n "$DEBUG" ]]; then
+#   set -x
+# fi
+#
+# fif() {
+#   if [ ! "$#" -gt 0 ]; then
+#     echo "Need a string to search for!";
+#     return 1;
+#   fi
+#   rg --files-with-matches --no-messages "$1" | fzf --print0 -e --multi --preview-window nohidden --preview "highlight --out-format=truecolor --syntax=zsh --style=base16/bellavene {} | rg -i --field-match-separator=' ' --field-context-separator=' ' --no-context-separator --no-line-number --color=always --colors=line:style:bold --colors 'match:bg:magenta' --colors 'match:fg:black' --context 50 '$1'"
+#   return 0
+# }
+#
+# # [[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'
+#
+# command -v rg >/dev/null
+# # shellcheck disable=SC2181
+# if [[ $? -eq 0 ]]; then
+#   # shellcheck disable=SC2068
+#   fif $@  2>&1 | awk '{if (FNR <= 1) print $NF}'
+# else
+#   echo "Can't find ripgrep (rg). Please install it"
+#   exit 1
+# fi
+#
