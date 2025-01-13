@@ -13,16 +13,16 @@ for (var i = 0; i < size(); i++) {
 }
 EOM
 
-
 pick="$(echo "$copyqjs" | \
         /Applications/CopyQ.app/Contents/MacOS/CopyQ eval - | \
-        fzf --preview-window nohidden \
-            --multi \
+        fzf --preview-window nohidden --no-info --multi \
+            --bind 'alt-e:execute(/Applications/CopyQ.app/Contents/MacOS/CopyQ read {1} | xargs -0 echo | micro)' \
+            --bind 'alt-backspace:execute(/Applications/CopyQ.app/Contents/MacOS/CopyQ remove {1})' \
             --preview='/Applications/CopyQ.app/Contents/MacOS/CopyQ read {1} | \
         highlight --out-format=truecolor \
             --syntax=zsh \
-            --style=base16/bellavene | \
-        rg  -i \
+            --style=bellavene | \
+        rga  -i \
             --field-match-separator=" " \
             --field-context-separator=" " \
             --no-context-separator \
@@ -39,6 +39,7 @@ pick="$(echo "$copyqjs" | \
 if [[ "$pick" != "" ]]; then
     /Applications/CopyQ.app/Contents/MacOS/CopyQ select "$pick"
 fi
+
 
 # rg -i --pretty --context 2 {q}
 # --preview='highlight -O ansi --style=base16/bellavene -l {} 2> /dev/null
