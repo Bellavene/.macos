@@ -2,18 +2,25 @@
 # currentsp=$(yabai -m query --spaces --space | jq '.display')
 currentsp=$(yabai -m query --spaces display --space)
 windowcount=$(yabai -m query --windows --space | jq -r '.[]."is-floating"' | grep false | wc -l)
-excludes="Menuwhere\|Color Picker\|xQuartz"
-countexcludes=$(yabai -m query --windows --space | jq -r '.[].app' | grep "${excludes}" | wc -l)
+# excludes="Menuwhere\|Color Picker\|xQuartz"
+# countexcludes=$(yabai -m query --windows --space | jq -r '.[].app' | grep "${excludes}" | wc -l)
 hiddenwindows=$(yabai -m query --windows --space | jq -r '.[]."is-visible"' | grep false | wc -l)
-windowcount="$((windowcount - hiddenwindows - countexcludes))"
+# windowcount="$((windowcount - hiddenwindows - countexcludes))"
+windowcount="$((windowcount - hiddenwindows))"
 
 case $windowcount in
 		[0-1])
 			yabai -m config \
 				split_ratio 0.30 \
-				split_type vertical \
+				split_type auto \
+				window_insertion_point first\
 			;;
 		2)
+			yabai -m config \
+				split_ratio 0.5 \
+				split_type horizontal \
+			;;
+		3)
 			yabai -m config \
 				split_ratio 0.5 \
 				split_type horizontal \
@@ -21,6 +28,7 @@ case $windowcount in
 		*)
 			yabai -m config \
 				split_ratio 0.5 \
-				split_type horizontal \
+				split_type auto \
+				window_insertion_point focused\
 			;;
 esac
