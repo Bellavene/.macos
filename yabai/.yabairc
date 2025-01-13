@@ -1,46 +1,69 @@
 #!/bin/zsh
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
-# yabai -m config debug_output on
+yabai -m config debug_output on
 
-yabai -m config                             	\
-	split_ratio                  0.30	\
-	layout                       bsp	\
-	split_type                   auto       \
-	auto_balance                 off        \
-	top_padding                  4		\
-	bottom_padding               4		\
-	left_padding                 4		\
-	right_padding                4		\
-	window_gap                   10		\
-	external_bar                 main:0:0   \
-	display_arrangement_order    vertical	\
-	window_animation_duration    0 		\
-  window_animation_easing      ease_in_sine 	\
-	window_origin_display        cursor	\
-	window_placement             first_child \
-	window_opacity_duration      0.22 	\
-	window_shadow                off   	\
-	window_zoom_persist          off 	\
-	window_opacity               off	\
-	active_window_opacity        1.0 	\
-	normal_window_opacity        0.8 	\
-  insert_feedback_color        0xffc66500	\
-	focus_follows_mouse          autofocus	\
-	mouse_follows_focus          on		\
-	mouse_drop_action            swap 	\
-	mouse_modifier               fn		\
-	mouse_action1                move	\
+yabai -m config                             \
+	split_ratio                  0.5			    \
+	layout                       bsp			    \
+  window_insertion_point       first        \
+	split_type                   horizontal   \
+	auto_balance                 x-axis       \
+	top_padding                  4				    \
+	bottom_padding               4				    \
+	left_padding                 4				    \
+	right_padding                4				    \
+	window_gap                   8				    \
+	external_bar                 main:0:0     \
+	display_arrangement_order    horizontal	  \
+	window_animation_duration    0.15 			  \
+  window_animation_easing      ease_in_sine \
+	window_origin_display        cursor	  	  \
+	window_placement             first_child	\
+	window_opacity_duration      0.22 			  \
+	window_shadow                on   			  \
+	window_zoom_persist          off 			    \
+	window_opacity               off				  \
+	active_window_opacity        1.0 			    \
+	normal_window_opacity        0.8 		      \
+  insert_feedback_color        0xffc66500   \
+	focus_follows_mouse          autoraise		\
+	mouse_follows_focus          on			      \
+	mouse_drop_action            swap 			  \
+	mouse_modifier               fn				    \
+	mouse_action1                move			    \
 	mouse_action2                resize
 
-  # menubar_opacity              0.7		\
-  # insert_feedback_color        0xff000000	\
+  # menubar_opacity              0.7         \
+  # insert_feedback_color        0xff000000  \
+
+
+# Back from Zoom Fullscreen
+###########################
+# yabai -m signal --add event=window_focused action='if [[ $(yabai -m query --windows --window | jq ".\"is-floating\"") == "false" ]]; then
+# win_id=$(yabai -m query --windows --space | jq "map(select(.\"has-fullscreen-zoom\" and (.\"has-focus\" | not)))[0].id")
+# if [[ $win_id != "null" ]]; then yabai -m window $win_id --toggle zoom-fullscreen; fi
+# fi'
+
+
+# Delete free spaces
+####################
+yabai -m signal --add event=space_changed action='yabai-space-autoclose &> /dev/null & disown'
+
 
 # Rules
 #######
+
+# Sketchybar
+###################
+# yabai -m signal --add event=window_title_changed action="sketchybar --trigger title_change &> /dev/null &disown"
+# yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus &> /dev/null &disown"
+
+# yabai -m rule --add label="manage_all" app=".*" sub-layer=normal
+# yabai -m rule --add label="manage_all" app=".*" manage=on sub-layer=normal
+
 yabai -m rule --add app='macOS InstantView'     manage=off
 yabai -m rule --add app='Dock'                  manage=off
-
 yabai -m rule --add \
          app="(^coreautha$|\
                 The Unarchiver|\
@@ -56,14 +79,32 @@ yabai -m rule --add \
                 BetterTouchTool)" \
          manage=off
 
-yabai -m rule --add app=".*" title="(Copy|Bin|Move|About This Mac|Info|Alert|Settings|Preferences|iStat Menus Status|LuLu Alert|LuLu$)" \
+# yabai -m rule --add \
+#          app="^Finder$" \
+#          sub-layer=above \
+#          manage=on \
+#          sticky=on \
+#          grid=4:9:0:3:2:0
+#
+
+yabai -m rule --add \
+         app="^Finder$" \
+         title="^(Copy|Connect|Move|Info)$"
+         manage=off \
+         sticky=on \
+         grid=2:9:0:0:2:0
+         # grid=4:9:0:3:2:0
+
+yabai -m rule --add app=".*" title="^(About This Mac|Alert|Settings|Preferences|iStat Menus Status|LuLu Alert|LuLu)$" \
          sub-layer=above \
+         sticky=on \
          manage=off
 
 yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
 
-yabai -m rule --add app='System Settings' \
-	 manage=off sub-layer=normal
+yabai -m rule --add app='System Settings' manage=off sub-layer=normal
+# yabai -m signal --add event=application_deactivated app="^System Settings$" action="osascript -e 'tell application \"System Events\"' -e 'tell application \"System Settings\"' -e 'to set minimized to true' -e 'end tell' -e 'end tell'"
+# yabai -m signal --add event=application_activated app="^System Settings$" action="osascript -e 'tell application \"System Events\"' -e 'tell application \"System Settings\"' -e 'to set minimized to false' -e 'end tell' -e 'end tell'"
 
 yabai -m rule --add \
          title='Windows' \
@@ -86,23 +127,31 @@ yabai -m rule --add \
          manage=off
 
 yabai -m rule --add \
-         label="Finder floating" \
-         app="^Finder$" \
-         title="(Copy|Connect|Move|Info|Finder Settings)" \
-         sub-layer=above \
-         manage=off
-
-yabai -m rule --add \
          label="Scratchpad" \
          title="Scratchpad" \
          manage=off \
          grid=4:4:1:1:2:2
 
 yabai -m rule --add \
+         app="^iTerm$" \
          label="Pasteboard" \
-         title="Pasteboard" \
-         grid=4:4:1:1:2:2 \
+         title="^Pasteboard$" \
+         manage=off \
+         grid=4:4:1:1:2:2
+
+yabai -m rule --add \
+         app="^iTerm$" \
+         label="File Manager" \
+         title="^File Manager$" \
+         display=2 \
          manage=off
+
+yabai -m rule --add \
+         app="^iTerm$" \
+         label="Messengers" \
+         title="^Messengers$" \
+         manage=off \
+         grid=4:4:1:1:2:2 \
 
 yabai -m rule --add \
          label="Tabs" \
@@ -111,16 +160,12 @@ yabai -m rule --add \
          manage=off
 
 yabai -m rule --add \
-         label="Audio Output" \
-         title="Audio Output" \
+         label="Menus" \
+         title="Menu" \
          grid=9:7:3:3:1:1 \
          manage=off
 
-yabai -m rule --add \
-         label="Audio Input" \
-         title="Audio Input" \
-         grid=9:7:3:3:1:1 \
-         manage=off
+# yabai -m rule --add app="^mpv$" title="^mpv$" sticky=on layer=above manage=off grid=4:5:4:4:1:1
 
 # yabai -m rule --add \
 #          label="Quick Look" \
@@ -130,67 +175,45 @@ yabai -m rule --add \
 #          action="sleep 2; yabai -m window --grid 1:1:0:0:1:1"
 #          grid=1:1:0:0:1:1
 
-# yabai -m rule --add \
-#          label="Messengers" \
-#          title="Messengers" \
-#          grid=4:4:1:1:2:2 \
-#          manage=off
-
-# yabai -m rule --add \
-#          app="^mpv$|mpv-bundle" \
-#          layer=above
-#          sub-layer=below
-         # scratchpad="MPV" \
-         # layer=above
          # grid=9:7:3:3:1:1 \
+         # layer=above \
          # grid=9:7:3:3:1:2 \
          # grid=9:5:2:3:1:2 \
-         # grid="11:11:1:1:9:9" \
 
 # yabai -m rule --add app="(^mpv$|mpv-bundle)" \
 #          display=2 \
 #          opacity=1.0 \
 #          manage=off
 
-yabai -m rule --add app=".*" sub-layer=normal
-
-# Signals
+# Balance by windows counter
 ############################
-
-yabai -m signal --add event=window_created action='yabai-panes; yabai -m window --warp first; yabai -m window --warp prev; yabai -m space --balance x-axis'
-yabai -m signal --add event=window_destroyed action='yabai-panes; yabai -m space --balance x-axis'
-yabai -m signal --add event=window_minimized action='yabai-panes; yabai -m space --balance x-axis'
-yabai -m signal --add event=window_deminimized action='yabai-panes; yabai -m window --warp first; yabai -m window --warp prev; yabai -m space --balance x-axis'
-yabai -m signal --add event=application_hidden action='yabai-panes; yabai -m space --balance x-axis'
+yabai -m signal --add event=window_created action='yabai-panes'
+yabai -m signal --add event=window_destroyed action='yabai-panes'
+yabai -m signal --add event=application_terminated action='yabai-panes'
+yabai -m signal --add event=window_deminimized action='yabai-panes; yabai -m window --warp first'
+yabai -m signal --add event=window_minimized action='yabai-panes'
+yabai -m signal --add event=application_hidden action='yabai-panes'
 yabai -m signal --add event=application_visible action='yabai-panes'
+yabai -m signal --add event=space_destroyed action='yabai-panes'
 yabai -m signal --add event=space_changed action='yabai-panes'
+yabai -m signal --add event=display_changed action='yabai-panes'
+
 # yabai -m signal --add event=display_added action="m1ddc display 37D8832A-2D66-02CA-B9F7-8F30A301B230 set luminance 0"
 # yabai -m signal --add event=display_removed action="m1ddc display 37D8832A-2D66-02CA-B9F7-8F30A301B230 set luminance 100"
-yabai -m signal --add event=application_deactivated \
-	 app="^System Settings$" action="osascript -e 'tell application \"System Events\"' -e 'tell application \"System Settings\"' -e 'to set minimized to true'"
 
-# Focus last window
-###################
-# yabai -m signal --add event=window_destroyed active=yes action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null"
-
-# yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus recent || yabai -m window --focus first"
-
-# yabai -m signal --add event=window_destroyed active=yes action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null"
-# yabai -m signal --add event=window_minimized active=yes action="if \$(yabai -m query --windows --window \$YABAI_WINDOW_ID | jq -r '.\"is-floating\"'); then yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse &> /dev/null || yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id) &> /dev/null; fi"
-
-
-# Back from Zoom Fullscreen
-###########################
-yabai -m signal --add event=window_focused action='if [[ $(yabai -m query --windows --window | jq ".\"is-floating\"") == "false" ]]; then
-win_id=$(yabai -m query --windows --space | jq "map(select(.\"has-fullscreen-zoom\" and (.\"has-focus\" | not)))[0].id")
-if [[ $win_id != "null" ]]; then yabai -m window $win_id --toggle zoom-fullscreen; fi
-fi'
-
-# Delete free spaces
+# Autobalance toggle
 ####################
-yabai -m signal --add event=space_changed action='/Users/Klutchevski/CLI/yabai-space-autoclose &> /dev/null & disown'
+# if [ $(yabai -m config auto_balance) = "on" ]; then; yabai -m config auto_balance off; else; yabai -m config auto_balance on; fi
+
+# Autofocus
+###########
+# yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+# yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+# yabai -m signal --add event=application_hidden action='yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse'
+# yabai -m signal --add event=application_minimized action='yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse'
 
 yabai -m rule --apply
+yabai-panes
 yabai-borders-select &> /dev/null & disown
 
 echo "yabai configuration loaded.."
