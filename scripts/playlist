@@ -1,0 +1,29 @@
+#!/bin/zsh
+
+# alias MUSIC="mdfind -onlyin ~/Music/Music audio 2>/dev/null | sort"
+CURRENT=$(mpvc --format %path% | head -n 1)
+CURLINE=$(cat ~/Music/Music.m3u | grep -n "$CURRENT" | cut -d: -f1)
+cat ~/Music/Music.m3u | \
+fzf -m --track --wrap -d / --with-nth=-1 \
+--scroll-off 40 --sync --no-info --listen 6266 \
+--preview-window="50%:wrap:border" \
+--preview 'mediainfo {} | tail -n +3 | bat --color=always --style="plain" --theme=base16 --language=CpuInfo | cut -d: -f 2' \
+--color "hl:reverse" \
+--bind 'alt-f:change-preview-window(top,40%|right,60%|)' \
+--bind 'enter:execute-silent(mpvc --tracknum "$(cat /Users/Klutchevski/Music/Music.m3u | grep -n {} | cut -d: -f1)")+track+clear-query' \
+--bind 'alt-r:become:playlist' \
+--bind 'esc:track+clear-query+clear-selection' \
+--bind 'alt-e:execute(playlist-edit)' \
+--bind 'tab:toggle+track+down+clear-query' \
+--bind 'shift-tab:up+toggle+track+clear-query' \
+--bind "load:pos:$CURLINE"
+
+
+
+# --preview 'timg -p i -g ${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES} {}' \
+# --preview-window='up,15,wrap,hidden,+{1}+3-1-2/2' \
+# --preview-window=cycle \
+
+# --bind 'alt-r:become:playlist' \
+# --bind 'enter:execute-silent(mpvc --playnow "$(echo -n {})")+track+clear-query' \
+# --bind 'alt-e:execute(micro /Users/Klutchevski/Music/Music.m3u:{n})' \
