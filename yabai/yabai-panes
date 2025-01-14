@@ -19,11 +19,13 @@ case $windowcount in
 			yabai -m config \
 				split_ratio 0.5 \
 				split_type horizontal \
+				window_insertion_point first\
 			;;
 		3)
 			yabai -m config \
 				split_ratio 0.5 \
 				split_type horizontal \
+				window_insertion_point first\
 			;;
 		*)
 			yabai -m config \
