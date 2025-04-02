@@ -6,8 +6,8 @@ sqlite-utils "$SQLPATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" \
 | jq -r --raw-output0 '.[].ZPREVIEWTEXT' \
 | fzf --read0 --no-info --no-wrap --tac --no-multi --no-multi-line --listen 6265 \
   --bind 'alt-r:become(btt-clip-menu)' \
-  --bind 'enter:become(yabai -m window --grid 3:5:2:1:1:1;yabai -m window --focus recent;pbcopy {})' \
-  --bind 'alt-e:execute(echo {} | micro)' \
+  --bind 'enter:become(yabai -m window --grid 3:5:2:1:1:1;yabai -m window --focus recent;pbcopy <<<{})' \
+  --bind 'alt-e:execute($EDITOR <<<{})' \
   --bind 'esc:abort' \
   --color 'input:#fd971f,preview-border:#fd971f' \
   --preview-window='top:nohidden:wrap:border-bottom:60%:noinfo' \
