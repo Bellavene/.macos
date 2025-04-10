@@ -1,18 +1,30 @@
 #!/bin/zsh
-# A FZF clipboard menu for BetterTouchTool
+############################################
+# A FZF clipboard menu for BetterTouchTool #
+############################################
+
+########################################################
+# For realtime update you need to add a system watcher #
+# which will watch for message about new data in       #
+# system clipboard and execute the command below.      #
+# `curl` is from homebrew on my setup, it may mater.   #
+########################################################
+
+# curl -XPOST "localhost:6265" -d 'reload(sqlite-utils "$SQLPATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" | jq -r --raw-output0 ".[].ZPREVIEWTEXT")'
 
 SQLPATH=$(find ~/Library/Application\ Support/BetterTouchTool/ -maxdepth 1 -name "BTTClipboardManager_*.sqlite")
+
 sqlite-utils "$SQLPATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" \
 | jq -r --raw-output0 '.[].ZPREVIEWTEXT' \
 | fzf +m --read0 --tac --listen 6265 \
-  --no-info --no-wrap --multi --no-multi-line \
+  --no-info --no-wrap --no-multi-line \
   --prompt='' \
   --ghost '' \
   --bind change:first \
-  --bind 'alt-r:reload(sqlite-utils "$HOME/Library/Application Support/BetterTouchTool/BTTClipboardManager_20241210.sqlite" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" | jq -r --raw-output0 ".[].ZPREVIEWTEXT")+clear-query+clear-selection' \
+  --bind 'alt-r:reload(sqlite-utils "$PATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" | jq -r --raw-output0 ".[].ZPREVIEWTEXT")' \
   --bind 'enter:execute-silent(cat {+f} | pbcopy;yabai -m window --focus recent || yabai -m window --focus last)+clear-query+clear-selection' \
-  --bind 'alt-e:execute-silent(cat {+f} | micro)+clear-query+clear-selection' \
-  --bind 'alt-c:execute-silent(cat {+f} | pbcopy)+clear-query+clear-selection' \
+  --bind 'alt-e:execute(cat {+f} | $EDITOR)+clear-selection' \
+  --bind 'alt-c:execute-silent(cat {+f} | pbcopy)+clear-selection' \
   --bind 'esc:clear-query+clear-selection' \
   --bind 'alt-q:abort' \
   --color 'input:#fd971f,preview-border:#fd971f' \
