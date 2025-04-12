@@ -13,22 +13,36 @@
 # curl -XPOST "localhost:6265" -d 'reload(sqlite-utils "$SQLPATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" | jq -r --raw-output0 ".[].ZPREVIEWTEXT")'
 
 SQLPATH=$(find ~/Library/Application\ Support/BetterTouchTool/ -maxdepth 1 -name "BTTClipboardManager_*.sqlite")
-
 sqlite-utils "$SQLPATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" \
 | jq -r --raw-output0 '.[].ZPREVIEWTEXT' \
-| fzf +m --read0 --tac --listen 6265 \
-  --no-info --no-wrap --no-multi-line \
+| fzf +m --read0 --print0 --listen 6265 \
+  --track --tac --no-wrap --multi --no-multi-line \
   --prompt='' \
   --ghost '' \
+  --pointer '' \
+  --margin=1,0,0 \
+  --padding=0 \
+  --no-info \
+  --layout=default \
+  --scheme=history \
   --bind change:first \
-  --bind 'alt-r:reload(sqlite-utils "$PATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" | jq -r --raw-output0 ".[].ZPREVIEWTEXT")' \
-  --bind 'enter:execute-silent(cat {+f} | pbcopy;yabai -m window --focus recent || yabai -m window --focus last)+clear-query+clear-selection' \
-  --bind 'alt-e:execute(cat {+f} | $EDITOR)+clear-selection' \
-  --bind 'alt-c:execute-silent(cat {+f} | pbcopy)+clear-selection' \
-  --bind 'esc:clear-query+clear-selection' \
-  --bind 'alt-q:abort' \
-  --color 'input:#fd971f,preview-border:#fd971f' \
-  --preview-window='top:nohidden:wrap:50%:noinfo' \
+  --bind 'enter:become(cat {+f} | pbcopy;yabai -m window --focus recent)' \
+  --bind 'esc:clear-query+pos:1' \
+  --bind 'alt-q:become(yabai -m window --focus recent)' \
+  --bind 'alt-e:execute(cat {+f} | $EDITOR)+clear-query+clear-selection' \
+  --bind 'alt-c:execute-silent(cat {} | pbcopy)+clear-query+clear-selection' \
+  --bind 'load:pos:1' \
+  --color \
+input:#fd971f,\
+preview-border:black,\
+fg:#0d4d00,\
+fg+:green,\
+bg+:black,\
+hl:yellow:bold,\
+hl+:green,\
+info:#0d4d00,\
+pointer:green \
+  --preview-window='top:nohidden:wrap:30%' \
   --preview='echo {} | \
              highlight \
                  --out-format=truecolor \
