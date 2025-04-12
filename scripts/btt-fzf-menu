@@ -1,15 +1,11 @@
 #!/bin/zsh
-############################################
 # A FZF clipboard menu for BetterTouchTool #
-############################################
-
-########################################################
-# For realtime update you need to add a system watcher #
-# which will watch for message about new data in       #
-# system clipboard and execute the command below.      #
-# `curl` is from homebrew on my setup, it may mater.   #
-########################################################
-
+##################################################################
+# For realtime update you need to add a system signal watcher    #
+# for new clipboard distributed message and if true will execute #
+# the command below.                                             #
+# Notice `curl` is from homebrew on my setup, it may mater.      #
+##################################################################
 # curl -XPOST "localhost:6265" -d 'reload(sqlite-utils "$SQLPATH" "select Z_PK, ZPREVIEWTEXT from ZBTTCLIP" | jq -r --raw-output0 ".[].ZPREVIEWTEXT")'
 
 SQLPATH=$(find ~/Library/Application\ Support/BetterTouchTool/ -maxdepth 1 -name "BTTClipboardManager_*.sqlite")
