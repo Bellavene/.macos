@@ -16,7 +16,6 @@ mpv-get-list \
 --marker='▌' \
 --extended \
 --info=default \
---color 'fg:cyan,bg+:-1,fg+:yellow,hl:magenta:bold,hl+:yellow:bold,preview-border:black,pointer:yellow,scrollbar:magenta,info:black' \
 --preview "$PREV" \
 --preview-window="30%:top:nohidden:wrap:noinfo:border-bottom" \
 --bind 'enter:execute-silent(mpv-play-playlist-pos {})+clear-query' \
