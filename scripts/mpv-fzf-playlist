@@ -1,1 +1,29 @@
+#!/bin/zsh
 
+# A self updating playlist for mpv through fzf.
+
+CURLINE=$(echo '{"command": ["get_property", "playlist-pos-1"]}' | socat - /tmp/mpvsocket | jq '.data')
+PREV="echo '{ \"command\": [\"get_property\", \"filtered-metadata\"] }' | socat - /tmp/mpvsocket | jq -r \".data.Artist, .data.Album, .data.Title, .data.Date\" | sed 's/.*/\x1b[1m&\x1b[0m/' | sed 's/.*/\x1b[1m&\x1b[0m/' | sed 's,.*,$(tput setaf 3)&$(tput sgr0),'"
+mpv-get-list \
+| fzf -m --read0 --track -d / --with-nth=-1 --tiebreak end \
+--sync \
+--listen=6266 \
+--margin=1,0,0 \
+--padding=0 \
+--prompt='' \
+--ghost='' \
+--pointer='' \
+--marker='▌' \
+--extended \
+--info=default \
+--color 'fg:cyan,bg+:-1,fg+:yellow,hl:magenta:bold,hl+:yellow:bold,preview-border:black,pointer:yellow,scrollbar:magenta,info:black' \
+--preview "$PREV" \
+--preview-window="30%:top:nohidden:wrap:noinfo:border-bottom" \
+--bind 'enter:execute-silent(mpv-play-playlist-pos {})+clear-query' \
+--bind 'alt-r:execute(ranger --selectfile={})+track+clear-query' \
+--bind 'esc:execute-silent(mpv-update-playlist)+clear-query+clear-selection' \
+--bind 'alt-e:execute(cat {+f} | micro)' \
+--bind 'alt-c:execute-silent(cat {+f} | pbcopy)' \
+--bind 'alt-d:execute-silent(cat {} | pbcopy)' \
+--bind "load:pos($CURLINE)" \
+--bind "change:offset-middle"
