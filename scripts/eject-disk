@@ -1,8 +1,14 @@
-#!/bin/bash
+#!/bin/zsh
 
 if [[ "$(uname -s)" != 'Darwin' ]]; then
-  echo 'Sorry, this script only works on macOS'
+  echo 'This script only works on macOS'
   exit 1
 fi
 
-exec ls -d /Volumes/* | fzf --layout=reverse-list --bind 'alt-c:execute-silent(echo {} | pbcopy)+abort' -e -i | sed "s/^/'/;s/$/'/" | xargs hdiutil detach
+df -h | cut -d '%' -f3 | tail -n +14 | sed 's/^ *//' | \
+     fzf --layout=reverse-list \
+     --bind 'alt-c:execute-silent(echo {} | pbcopy)+abort' \
+     -e -i | \
+     sed "s/^/'/;s/$/'/" | \
+     xargs hdiutil eject
+     # xargs hdiutil detach
